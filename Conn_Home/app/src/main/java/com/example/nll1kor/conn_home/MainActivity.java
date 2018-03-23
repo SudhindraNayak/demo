@@ -22,6 +22,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -34,6 +38,8 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -84,6 +90,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //loadData();
+
     }
 
+    private void loadData() {
+        String SERVER_URL = "http://IP-address:3000";
+        String PATH = "/";
+
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, SERVER_URL,(JSONObject)null,new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+    }
 }
